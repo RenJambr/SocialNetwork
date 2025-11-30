@@ -10,7 +10,7 @@ import RadioInput from "../../ui/RadioInput";
 import Button from "../../ui/Button";
 import { useEffect } from "react";
 import { calculateAge } from "../../utils/helpers";
-import { useSignup } from "./useSignUp";
+import { useSignup } from "./useSignup";
 import { checkIfDataExists } from "../../services/apiAuth";
 import { Link } from "react-router";
 import SpinnerMini from "../../ui/SpinnerMini";
