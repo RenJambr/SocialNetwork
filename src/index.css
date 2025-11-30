@@ -1,0 +1,28 @@
+@import "tailwindcss";
+@theme {
+  --font-segoe: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
+  --breakpoint-xs: 480px;
+}
+
+.ant-picker {
+  background-color: #1e2939 !important;
+  color: #fff !important;
+}
+.ant-picker input::placeholder,
+.ant-picker input {
+  color: #fff !important;
+}
+.anticon svg {
+  color: #fff !important;
+}
+div[data-rmiz-modal-overlay] {
+  background-color: transparent;
+}
+div[data-rmiz-content="found"] {
+  display: flex;
+  justify-content: center;
+}
+html {
+  overflow: auto !important;
+  padding-right: 0px !important;
+}
