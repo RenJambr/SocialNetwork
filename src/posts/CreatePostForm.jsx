@@ -37,7 +37,7 @@ function CreatePostForm() {
           reset();
           setImagePreview(null);
         },
-      }
+      },
     );
   }
 

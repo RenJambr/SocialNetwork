@@ -1,17 +1,21 @@
 import imageCompression from "browser-image-compression";
 import { createNotification, deleteNotification } from "./apiNotifications";
 import supabase from "./supabase";
+// import { getRandomItem, getRandomItems } from "../utils/helpers";
+// import { getRandomNews } from "./apiNews";
 
 //API function for create post
 export async function createpost({
   userid,
+  urlImage = false,
   content,
   likes,
+  fake_post_id = null,
   original_post_id = null,
   original_post_user_id = null,
 }) {
   /// 1. Update image content
-  if (content.imageContent) {
+  if (content.imageContent && !urlImage) {
     // 1.1 Create a uniq file name
     const contentImageFileName = `image-${userid}-${Math.random()}`;
 
@@ -24,7 +28,7 @@ export async function createpost({
 
     const compressedImage = await imageCompression(
       content.imageContent,
-      options
+      options,
     );
 
     // 1.3 Upload image in the storage
@@ -56,6 +60,7 @@ export async function createpost({
         likes,
         original_post_id,
         original_post_user_id,
+        fake_post_id,
       },
     ])
     .select()
@@ -215,3 +220,35 @@ export async function deletePost({ id }) {
 
   if (error || commentError || sharedPostsError) throw new Error(error.message);
 }
+
+// Function for generate fake activity
+// export async function generateFakeActivity() {
+//   const { data: users, error } = await supabase.from("users").select("*");
+
+//   if (error) throw new Error(error.message);
+
+//   const author = getRandomItem(users);
+//   const news = await getRandomNews();
+
+//   const [likeUser1, likeUser2, likeUser3] = getRandomItems(users, 3);
+
+//   createpost({
+//     userid: author.id,
+//     urlImage: true,
+//     content: {
+//       imageContent: `${news?.urlToImage}`,
+//       textContent: news?.description,
+//     },
+//     likes: {
+//       usersIds: [
+//         { id: likeUser1?.id, username: likeUser1?.username },
+//         { id: likeUser2?.id, username: likeUser2?.username },
+//         { id: likeUser3?.id, username: likeUser3?.username },
+//       ],
+//       get length() {
+//         return this.usersIds.length;
+//       },
+//     },
+//     fake_post_id: news?.fake_post_id,
+//   });
+// }

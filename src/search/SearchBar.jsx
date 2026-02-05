@@ -32,7 +32,7 @@ function SearchBar() {
       searchResults
         ?.map((user) => user.id)
         .filter((id, i, arr) => id !== currUser.sub && arr.indexOf(id) === i),
-    [searchResults, currUser.sub]
+    [searchResults, currUser.sub],
   );
 
   //hook for getting friendship statuses with searched users that serves to filter users that is blocked
@@ -41,7 +41,7 @@ function SearchBar() {
     usersIdsFromSearchResults,
     {
       enabled: Boolean(usersIdsFromSearchResults?.length > 0 && currUser.sub),
-    }
+    },
   );
 
   function handleSearch(e) {
@@ -77,8 +77,9 @@ function SearchBar() {
               ?.filter(
                 (user) =>
                   !friendshipStatuses?.some(
-                    (f) => f.other_user_id === user.id && f.status === "blocked"
-                  )
+                    (f) =>
+                      f.other_user_id === user.id && f.status === "blocked",
+                  ),
               )
               .map((user) => (
                 <SearchItem user={user} key={user.id} setQuery={setQuery} />

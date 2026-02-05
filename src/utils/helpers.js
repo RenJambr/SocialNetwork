@@ -55,3 +55,11 @@ export function timeAgo(isoTime) {
   const years = Math.floor(days / 365);
   return `${years} year${years === 1 ? "" : "s"} ago`;
 }
+
+export function getRandomItem(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+export function getRandomItems(arr, count) {
+  return [...arr].sort(() => Math.random() - 0.5).slice(0, count);
+}
