@@ -1,0 +1,18 @@
+name: Generate Fake Activity
+
+# Pokreće se svake minute
+on:
+  schedule:
+    - cron: "*/1 * * * *" # svaka minuta
+  workflow_dispatch: # ručno pokretanje po potrebi
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Supabase Function
+        run: |
+          curl -X POST https://utjttkibkkfwyepsfyie.supabase.co/functions/v1/generate-fake-activity \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+          -H "Content-Type: application/json" \
+          -d '{}'
