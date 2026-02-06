@@ -3,7 +3,8 @@ name: Generate Fake Activity
 # Pokreće se svake minute
 on:
   schedule:
-    - cron: "0 */2 * * *" # svaka 2 sata, u 0. minuti
+    - cron: "0 12 * * 1"
+    - cron: "0 12 * * 5"
   workflow_dispatch: # ručno pokretanje po potrebi
 
 jobs:
