@@ -160,6 +160,44 @@ Deno.serve(async () => {
 
     logs.push("Inserting post...");
 
+    // PROVJERA: zadnji fake post
+    const { data: lastPost, error: lastPostError } = await supabase
+      .from("posts")
+      .select("created_at")
+      .not("fake_post_id", "is", null)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (lastPostError) {
+      return new Response(JSON.stringify({ error: lastPostError.message, logs }), {
+        status: 500,
+      });
+    }
+
+    if (lastPost?.created_at) {
+      const lastTime = new Date(lastPost.created_at).getTime();
+      const now = Date.now();
+      const diffMinutes = (now - lastTime) / 1000 / 60;
+
+      logs.push(`Last fake post was ${diffMinutes.toFixed(1)} minutes ago`);
+
+      if (diffMinutes < 120) {
+        logs.push("Too early. Skipping insert.");
+
+        return new Response(
+          JSON.stringify({
+            success: true,
+            skipped: true,
+            reason: "Not enough time passed",
+            logs,
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } }
+        );
+      }
+    }
+
+
     const { error: insertError } = await supabase.from("posts").insert({
       userid: author.id,
       content: {
